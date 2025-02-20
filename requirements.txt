@@ -1,0 +1,7 @@
+pillow
+PIL
+opencv-python
+numpy
+scikit-learn
+pickle
+json
