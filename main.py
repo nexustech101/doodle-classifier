@@ -53,6 +53,7 @@ def load_model_details(proj_name):
             return data
     except Exception as e:
         raise e
+    
 
 class DrawingClassifier:
 
@@ -318,62 +319,6 @@ class DrawingClassifier:
         self.root.destroy()
         exit()
     
-def load_model_details(proj_name):
-    if os.path.exists(f"{proj_name}/{proj_name}_data.pickle"):
-        try:
-            with open(f"{proj_name}/{proj_name}_data.pickle", "rb") as f:
-                data = pickle.load(f)
-            
-            # Ensure all required keys are present in the loaded data
-            if 'proj_name' not in data:
-                data['proj_name'] = proj_name
-            if 'data' not in data:
-                data['data'] = None
-            if 'classes' not in data:
-                data['classes'] = []
-            if 'clf' not in data:
-                data['clf'] = LinearSVC()  # Default to LinearSVC if classifier not saved
-
-            return data
-        except EXception as e:
-            return e
-    return None
-
-def predict(image: Image, classifier: LinearSVC, classes: list) -> object:
-    class_name = None
-    try:
-        # Load and preprocess the image
-        img = PIL.Image.open(image)
-        img.thumbnail((50, 50), PIL.Image.LANCZOS)
-        img = np.array(img)[:, :, 0]
-        img = img.reshape(1, -1)
-    except FileNotFoundError as e:
-        return f"File not found: {e}"
-    except PIL.UnidentifiedImageError as e:
-        return f"Cannot identify image file: {e}"
-    except Exception as e:
-        return f"Error processing image: {e}"
-    
-    try:
-        # Predict the class
-        class_num = classifier.predict(img)[0]
-    except ValueError as e:
-        return f"Error in model prediction: {e}"
-    except Exception as e:
-        return f"Error predicting class: {e}"
-
-    try:
-        # Find the class name
-        for class_info in classes:
-            if class_info.get('count') == class_num:
-                class_name = class_info.get('name')
-                break
-    except KeyError as e:
-        return f"Key error: {e}"
-    except Exception as e:
-        return f"Error finding class name: {e}"
-    
-    return class_name or "Could not identify shape."
 
 if __name__ == "__main__":
     DrawingClassifier()
