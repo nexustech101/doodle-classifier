@@ -34,6 +34,7 @@ def save_model_details(proj_name, data, classes, clf):
     except Exception as e:
         raise e
 
+# Load the model details from the named project directory
 def load_model_details(proj_name):
     try:
         if os.path.exists(f"{proj_name}/{proj_name}_data.pickle"):

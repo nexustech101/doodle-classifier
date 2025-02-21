@@ -1,2 +1,5 @@
 # Ignore test projects
 gun-classifier/
+
+# Ignore test files
+temp.png
